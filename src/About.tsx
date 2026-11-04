@@ -193,14 +193,12 @@ export default function About() {
           >
             PROJECTS
           </Link>
-          <a
-            href="https://mail.google.com/mail/?view=cm&fs=1&to=oreoviru2008@gmail.com"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/contact"
             className="font-hn text-sm hover:opacity-60 transition-opacity duration-300"
           >
-            Contact
-          </a>
+            CONTACT
+          </Link>
           <Link
             to="/"
             className="font-hn text-sm flex items-center gap-2 hover:opacity-60 transition-opacity duration-300 group"

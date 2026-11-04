@@ -10,7 +10,7 @@ const FRONT_IMAGE = '/portrait.png'
 const SOCIAL_LINKS = [
   { label: 'Instagram', url: 'https://www.instagram.com/oreo._.viru/' },
   { label: 'GitHub', url: 'https://github.com/oreoviru' },
-  { label: 'Contact', url: 'https://mail.google.com/mail/?view=cm&fs=1&to=oreoviru2008@gmail.com' },
+  { label: 'Contact', url: '/contact', isInternal: true },
 ]
 
 export default function App() {
@@ -109,20 +109,40 @@ export default function App() {
             ABOUT ME
           </Link>
 
+          {/* Contact */}
+          <Link
+            to="/contact"
+            className="text-sm hover:opacity-60 transition-opacity duration-300 anim-fade-up"
+            style={{ animationDelay: '1050ms' }}
+          >
+            CONTACT
+          </Link>
+
           {/* Social */}
           <div className="flex flex-col gap-0.5 text-sm">
-            {SOCIAL_LINKS.map((link, i) => (
-              <a
-                key={link.label}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:opacity-60 transition-opacity duration-300 anim-fade-up"
-                style={{ animationDelay: `${1150 + i * 80}ms` }}
-              >
-                {link.label}
-              </a>
-            ))}
+            {SOCIAL_LINKS.map((link, i) =>
+              link.isInternal ? (
+                <Link
+                  key={link.label}
+                  to={link.url}
+                  className="hover:opacity-60 transition-opacity duration-300 anim-fade-up"
+                  style={{ animationDelay: `${1150 + i * 80}ms` }}
+                >
+                  {link.label}
+                </Link>
+              ) : (
+                <a
+                  key={link.label}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:opacity-60 transition-opacity duration-300 anim-fade-up"
+                  style={{ animationDelay: `${1150 + i * 80}ms` }}
+                >
+                  {link.label}
+                </a>
+              )
+            )}
           </div>
         </div>
 
@@ -237,6 +257,18 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
             >
               ABOUT ME
             </Link>
+            <Link
+              to="/contact"
+              onClick={onClose}
+              className="text-4xl text-cream font-hn hover:opacity-60 transition-all duration-500"
+              style={{
+                opacity: open ? 1 : 0,
+                transform: open ? 'translateY(0)' : 'translateY(24px)',
+                transitionDelay: open ? '380ms' : '0ms',
+              }}
+            >
+              CONTACT
+            </Link>
           </nav>
         </div>
 
@@ -253,22 +285,38 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
             Find Me
           </p>
           <div className="flex flex-wrap gap-3">
-            {SOCIAL_LINKS.map((link, i) => (
-              <a
-                key={link.label}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-cream font-hn transition-all duration-500"
-                style={{
-                  opacity: open ? 1 : 0,
-                  transform: open ? 'translateY(0)' : 'translateY(16px)',
-                  transitionDelay: open ? `${550 + i * 60}ms` : '0ms',
-                }}
-              >
-                {link.label}
-              </a>
-            ))}
+            {SOCIAL_LINKS.map((link, i) =>
+              link.isInternal ? (
+                <Link
+                  key={link.label}
+                  to={link.url}
+                  onClick={onClose}
+                  className="text-sm text-cream font-hn transition-all duration-500"
+                  style={{
+                    opacity: open ? 1 : 0,
+                    transform: open ? 'translateY(0)' : 'translateY(16px)',
+                    transitionDelay: open ? `${550 + i * 60}ms` : '0ms',
+                  }}
+                >
+                  {link.label}
+                </Link>
+              ) : (
+                <a
+                  key={link.label}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-cream font-hn transition-all duration-500"
+                  style={{
+                    opacity: open ? 1 : 0,
+                    transform: open ? 'translateY(0)' : 'translateY(16px)',
+                    transitionDelay: open ? `${550 + i * 60}ms` : '0ms',
+                  }}
+                >
+                  {link.label}
+                </a>
+              )
+            )}
           </div>
         </div>
       </div>

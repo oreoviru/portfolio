@@ -176,14 +176,12 @@ export default function Projects() {
           >
             ABOUT ME
           </Link>
-          <a
-            href="https://mail.google.com/mail/?view=cm&fs=1&to=oreoviru2008@gmail.com"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/contact"
             className="font-hn hover:opacity-60 transition-opacity duration-300"
           >
-            Contact
-          </a>
+            CONTACT
+          </Link>
           <Link
             to="/"
             className="font-hn flex items-center gap-2 hover:opacity-60 transition-opacity duration-300 group"
@@ -497,14 +495,9 @@ export default function Projects() {
             >
               Instagram
             </a>
-            <a
-              href="https://mail.google.com/mail/?view=cm&fs=1&to=oreoviru2008@gmail.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-cream transition-colors"
-            >
+            <Link to="/contact" className="hover:text-cream transition-colors">
               Contact
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -37,6 +37,9 @@ An editorial, high-fashion portfolio website featuring layered visual depth, inf
     - *Python, JavaScript, React, HTML, CSS, API Integration, AI & ML, Ollama, Git, GitHub, Three.js, Automation*
     - Dynamic radial cursor spotlight effect following mouse movement.
     - Subtle 3D elevation, border illumination, and Lucide icon animations.
+- **Dedicated Contact Hub (`/contact`)**:
+  - Interactive clickable navbar for **LinkedIn**, **Instagram**, **Email (Gmail)**, and **GitHub**.
+  - Detailed glassmorphic channel cards with direct profiles, live email copy-to-clipboard button, and quick Gmail launcher.
 - **Direct Contact Integration**: One-click redirect to Gmail compose addressed to `oreoviru2008@gmail.com`.
 - **Responsive Mobile Drawer**: Morphing hamburger-to-close icon with smooth staggered reveals for menu items.
 - **Zero-Flicker SPA Routing**: Configured with `vercel.json` rewrites for smooth client-side routing on Vercel without 404s.
@@ -64,6 +67,7 @@ portfolio/
 ├── src/
 │   ├── About.tsx          # About Me page with 12 interactive skill cards
 │   ├── App.tsx            # Main hero section with marquee & layered visuals
+│   ├── Contact.tsx        # Contact hub with clickable channels navbar
 │   ├── Projects.tsx       # Projects showcase with NEURO flagship simulator
 │   ├── index.css          # Tailwind directives & keyframe animations
 │   ├── main.tsx           # React Router route configuration
