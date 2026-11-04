@@ -311,15 +311,18 @@ export default function Projects() {
               </div>
 
               {/* Action Buttons */}
-              <div className="pt-4 flex flex-wrap items-center gap-4">
+              <div className="pt-4 flex flex-wrap items-center gap-3">
+                <span className="inline-flex items-center gap-2 rounded-xl border border-cream/30 bg-cream/10 text-cream px-4 py-2 font-hn text-xs tracking-wide">
+                  <Lock size={14} className="text-cream/80" />
+                  <span>Private Repository &bull; Proprietary Core</span>
+                </span>
                 <a
-                  href="https://github.com/oreoviru/J.A.R.V.I.S--Oreo-EDITION-"
+                  href="https://mail.google.com/mail/?view=cm&fs=1&to=oreoviru2008@gmail.com&su=Inquiry%20regarding%20NEURO%20AI%20Assistant"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-xl bg-cream text-black px-5 py-2.5 font-hn text-sm font-medium hover:bg-cream/90 transition-all hover:scale-105 active:scale-95 duration-200"
+                  className="inline-flex items-center gap-2 rounded-xl bg-cream text-black px-4 py-2 font-hn text-xs font-medium hover:bg-cream/90 transition-all hover:scale-105 active:scale-95 duration-200"
                 >
-                  <Github size={16} />
-                  <span>Explore Repository</span>
+                  <span>Request System Demo</span>
                 </a>
               </div>
             </div>
@@ -508,3 +511,4 @@ export default function Projects() {
     </main>
   )
 }
+
