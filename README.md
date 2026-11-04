@@ -25,6 +25,12 @@ An editorial, high-fashion portfolio website featuring layered visual depth, inf
   2. Giant infinite scrolling marquee (`Viraj — Salunkhe`)
   3. Front portrait cutout overlay sitting over the scrolling text so letters pass through behind the subject
   4. Minimalist top navigation & bottom credits
+- **Projects Showcase (`/projects`)**:
+  - **Flagship Feature: NEURO** — Autonomous AI & macOS Automation System with interactive live simulator HUD, YOLOv8 biometric face detection, 24kHz AvaNeural speech engine, and multi-app routine triggers.
+  - **AirPool AI** — Flight-aware passenger matching and rideshare cost-splitting platform.
+  - **Campus Recover** — Multi-modal lost & found platform for Rishihood University with CLIP + Sentence-Transformers + GIS radar.
+  - **PuzzleCam** — Gesture-controlled browser photobooth & 3x3 interactive puzzle solver.
+  - **RetroLens** — Real-time computer vision FX engine with 11 custom shaders and hand-tracking portals.
 - **About Me Page (`/about`)**:
   - Detailed biography highlighting passion for AI, Full-Stack Development, and projects like **NEURO** and **AERI**.
   - **12 Interactive Skill Cards**:
@@ -58,6 +64,7 @@ portfolio/
 ├── src/
 │   ├── About.tsx          # About Me page with 12 interactive skill cards
 │   ├── App.tsx            # Main hero section with marquee & layered visuals
+│   ├── Projects.tsx       # Projects showcase with NEURO flagship simulator
 │   ├── index.css          # Tailwind directives & keyframe animations
 │   ├── main.tsx           # React Router route configuration
 │   └── vite-env.d.ts      # Vite client types
@@ -119,3 +126,4 @@ npm run preview
 ## 🖤 Credits
 
 > A homage to **OREO>_<VIRU**
+

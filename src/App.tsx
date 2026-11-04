@@ -90,7 +90,16 @@ export default function App() {
         </a>
 
         {/* Desktop right cluster */}
-        <div className="hidden sm:flex items-start gap-16 lg:gap-24">
+        <div className="hidden sm:flex items-start gap-12 lg:gap-16">
+          {/* Projects */}
+          <Link
+            to="/projects"
+            className="text-sm hover:opacity-60 transition-opacity duration-300 anim-fade-up"
+            style={{ animationDelay: '950ms' }}
+          >
+            PROJECTS
+          </Link>
+
           {/* About Me */}
           <Link
             to="/about"
@@ -203,7 +212,19 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
           >
             Site Index
           </p>
-          <nav className="flex flex-col gap-2">
+          <nav className="flex flex-col gap-3">
+            <Link
+              to="/projects"
+              onClick={onClose}
+              className="text-4xl text-cream font-hn hover:opacity-60 transition-all duration-500"
+              style={{
+                opacity: open ? 1 : 0,
+                transform: open ? 'translateY(0)' : 'translateY(24px)',
+                transitionDelay: open ? '260ms' : '0ms',
+              }}
+            >
+              PROJECTS
+            </Link>
             <Link
               to="/about"
               onClick={onClose}
@@ -211,7 +232,7 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
               style={{
                 opacity: open ? 1 : 0,
                 transform: open ? 'translateY(0)' : 'translateY(24px)',
-                transitionDelay: open ? '300ms' : '0ms',
+                transitionDelay: open ? '320ms' : '0ms',
               }}
             >
               ABOUT ME

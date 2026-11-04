@@ -187,6 +187,12 @@ export default function About() {
           Viraj
         </Link>
         <div className="flex items-center gap-6 sm:gap-8">
+          <Link
+            to="/projects"
+            className="font-hn text-sm hover:opacity-60 transition-opacity duration-300"
+          >
+            PROJECTS
+          </Link>
           <a
             href="https://mail.google.com/mail/?view=cm&fs=1&to=oreoviru2008@gmail.com"
             target="_blank"
@@ -232,7 +238,7 @@ export default function About() {
           </p>
 
           <p>
-            I believe the best way to understand technology is to build something with it. That's why I enjoy working on personal projects that challenge my creativity and technical abilities. One of my key projects is <strong className="font-semibold text-cream">NEURO</strong>, an AI-powered desktop assistant designed to bring intelligent conversations, computer vision, system monitoring, and automation together in one platform. Another project is <strong className="font-semibold text-cream">AERI</strong>, a macOS application concept inspired by the idea of making everyday interactions simpler, smarter, and more intuitive. Working on these projects allows me to explore new technologies, understand real-world development challenges, and improve my problem-solving abilities.
+            I believe the best way to understand technology is to build something with it. That's why I enjoy working on personal projects that challenge my creativity and technical abilities. One of my key projects is <Link to="/projects" className="underline decoration-cream/50 underline-offset-4 hover:decoration-cream text-cream font-semibold">NEURO</Link>, an AI-powered desktop assistant designed to bring intelligent conversations, computer vision, system monitoring, and automation together in one platform. Another project is <strong className="font-semibold text-cream">AERI</strong>, a macOS application concept inspired by the idea of making everyday interactions simpler, smarter, and more intuitive. Working on these projects allows me to explore new technologies, understand real-world development challenges, and improve my problem-solving abilities.
           </p>
 
           <p>
