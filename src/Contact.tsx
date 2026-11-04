@@ -10,7 +10,6 @@ import {
   Check,
   ExternalLink,
   MessageSquare,
-  Sparkles,
 } from 'lucide-react'
 
 const BG_IMAGE =
@@ -157,31 +156,23 @@ export default function Contact() {
         {/* CLICKABLE CHANNELS NAVBAR                                         */}
         {/* ═══════════════════════════════════════════════════════════════════ */}
         <div className="mb-12 rounded-2xl border border-cream/20 bg-white/[0.04] p-3 sm:p-4 backdrop-blur-xl shadow-[0_10px_30px_-10px_rgba(239,238,233,0.08)] anim-fade-up">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <span className="text-xs font-hn uppercase tracking-[0.2em] text-cream/60 flex items-center gap-2">
-              <Sparkles size={14} className="text-cream" />
-              <span>Channels Navbar:</span>
-            </span>
-
-            {/* Multiple Clickable Navigation Pills */}
-            <div className="flex flex-wrap items-center justify-center gap-2">
-              {CHANNELS.map((channel) => {
-                const Icon = channel.icon
-                return (
-                  <a
-                    key={channel.id}
-                    href={channel.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-2 rounded-xl border border-cream/20 bg-black/60 px-3.5 py-2 text-xs font-hn text-cream/90 hover:border-cream/50 hover:bg-cream hover:text-black transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm"
-                  >
-                    <Icon size={14} className="transition-transform group-hover:scale-110" />
-                    <span className="font-medium">{channel.name}</span>
-                    <ExternalLink size={10} className="opacity-60 group-hover:opacity-100" />
-                  </a>
-                )
-              })}
-            </div>
+          <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
+            {CHANNELS.map((channel) => {
+              const Icon = channel.icon
+              return (
+                <a
+                  key={channel.id}
+                  href={channel.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-2 rounded-xl border border-cream/20 bg-black/60 px-4 py-2.5 text-xs sm:text-sm font-hn text-cream/90 hover:border-cream/50 hover:bg-cream hover:text-black transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm"
+                >
+                  <Icon size={15} className="transition-transform group-hover:scale-110" />
+                  <span className="font-medium">{channel.name}</span>
+                  <ExternalLink size={11} className="opacity-60 group-hover:opacity-100" />
+                </a>
+              )
+            })}
           </div>
         </div>
 
@@ -308,3 +299,4 @@ export default function Contact() {
     </main>
   )
 }
+
