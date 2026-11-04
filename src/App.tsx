@@ -10,7 +10,6 @@ const FRONT_IMAGE = '/portrait.png'
 const SOCIAL_LINKS = [
   { label: 'Instagram', url: 'https://www.instagram.com/oreo._.viru/' },
   { label: 'GitHub', url: 'https://github.com/oreoviru' },
-  { label: 'Contact', url: '/contact', isInternal: true },
 ]
 
 export default function App() {
@@ -90,7 +89,7 @@ export default function App() {
         </a>
 
         {/* Desktop right cluster */}
-        <div className="hidden sm:flex items-start gap-12 lg:gap-16">
+        <div className="hidden sm:flex items-center gap-10 lg:gap-14">
           {/* Projects */}
           <Link
             to="/projects"
@@ -117,33 +116,6 @@ export default function App() {
           >
             CONTACT
           </Link>
-
-          {/* Social */}
-          <div className="flex flex-col gap-0.5 text-sm">
-            {SOCIAL_LINKS.map((link, i) =>
-              link.isInternal ? (
-                <Link
-                  key={link.label}
-                  to={link.url}
-                  className="hover:opacity-60 transition-opacity duration-300 anim-fade-up"
-                  style={{ animationDelay: `${1150 + i * 80}ms` }}
-                >
-                  {link.label}
-                </Link>
-              ) : (
-                <a
-                  key={link.label}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:opacity-60 transition-opacity duration-300 anim-fade-up"
-                  style={{ animationDelay: `${1150 + i * 80}ms` }}
-                >
-                  {link.label}
-                </a>
-              )
-            )}
-          </div>
         </div>
 
         {/* Mobile hamburger */}
@@ -285,38 +257,22 @@ function MobileDrawer({ open, onClose }: { open: boolean; onClose: () => void })
             Find Me
           </p>
           <div className="flex flex-wrap gap-3">
-            {SOCIAL_LINKS.map((link, i) =>
-              link.isInternal ? (
-                <Link
-                  key={link.label}
-                  to={link.url}
-                  onClick={onClose}
-                  className="text-sm text-cream font-hn transition-all duration-500"
-                  style={{
-                    opacity: open ? 1 : 0,
-                    transform: open ? 'translateY(0)' : 'translateY(16px)',
-                    transitionDelay: open ? `${550 + i * 60}ms` : '0ms',
-                  }}
-                >
-                  {link.label}
-                </Link>
-              ) : (
-                <a
-                  key={link.label}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-cream font-hn transition-all duration-500"
-                  style={{
-                    opacity: open ? 1 : 0,
-                    transform: open ? 'translateY(0)' : 'translateY(16px)',
-                    transitionDelay: open ? `${550 + i * 60}ms` : '0ms',
-                  }}
-                >
-                  {link.label}
-                </a>
-              )
-            )}
+            {SOCIAL_LINKS.map((link, i) => (
+              <a
+                key={link.label}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-cream font-hn transition-all duration-500"
+                style={{
+                  opacity: open ? 1 : 0,
+                  transform: open ? 'translateY(0)' : 'translateY(16px)',
+                  transitionDelay: open ? `${550 + i * 60}ms` : '0ms',
+                }}
+              >
+                {link.label}
+              </a>
+            ))}
           </div>
         </div>
       </div>
