@@ -346,7 +346,7 @@ export default function TerminalModal() {
               {/* Welcome Banner */}
               <div className="space-y-1 text-cream/70 border-b border-cream/10 pb-4">
                 <p className="text-cream font-semibold">
-                  VirajOS &bull; Interactive Portfolio Terminal v2.4 (arm64)
+                  Interactive Portfolio Terminal
                 </p>
                 <p className="text-[11px] text-cream/50">
                   Type <span className="text-emerald-400 font-medium">help</span> to view all commands &bull; Try <span className="text-emerald-400 font-medium">neuro</span>, <span className="text-emerald-400 font-medium">skills</span>, <span className="text-emerald-400 font-medium">projects</span>, or <span className="text-emerald-400 font-medium">contact</span>.
@@ -415,3 +415,4 @@ export default function TerminalModal() {
     </>
   )
 }
+
