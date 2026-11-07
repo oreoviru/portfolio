@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { X } from 'lucide-react'
-import IntroSequence from './IntroSequence'
 
 const BG_IMAGE =
   'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260729_022513_486985a2-ac8c-4278-91a8-071dcd9fcaff.png&w=1280&q=85'
@@ -15,7 +14,6 @@ const SOCIAL_LINKS = [
 
 export default function App() {
   const [drawerOpen, setDrawerOpen] = useState(false)
-  const [showIntro, setShowIntro] = useState(true)
 
   // Lock body scroll when drawer is open
   useEffect(() => {
@@ -26,9 +24,7 @@ export default function App() {
   const closeDrawer = useCallback(() => setDrawerOpen(false), [])
 
   return (
-    <>
-      {showIntro && <IntroSequence onComplete={() => setShowIntro(false)} />}
-      <section className="relative h-[100dvh] w-full overflow-hidden bg-black">
+    <section className="relative h-[100dvh] w-full overflow-hidden bg-black">
       {/* ─── BG image ─── */}
       <img
         src={BG_IMAGE}
@@ -157,7 +153,6 @@ export default function App() {
       {/* ─── Mobile drawer ─── */}
       <MobileDrawer open={drawerOpen} onClose={closeDrawer} />
     </section>
-  </>
   )
 }
 
