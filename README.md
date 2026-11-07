@@ -37,6 +37,10 @@ An editorial, high-fashion portfolio website featuring layered visual depth, inf
     - *Python, JavaScript, React, HTML, CSS, API Integration, AI & ML, Ollama, Git, GitHub, Three.js, Automation*
     - Dynamic radial cursor spotlight effect following mouse movement.
     - Subtle 3D elevation, border illumination, and Lucide icon animations.
+- **Interactive Hacker CLI Terminal**:
+  - Global floating terminal toggleable via **`~`** (tilde) key or bottom-right **`[CLI]`** button.
+  - Interactive commands: `help`, `skills`, `projects`, `neuro`, `contact`, `goto`, `resume`, `whoami`, `clear`, `exit`.
+  - Command history navigation with Up/Down arrow keys and terminal quick-action bar.
 - **Dedicated Contact Hub (`/contact`)**:
   - Interactive clickable navbar for **LinkedIn**, **Instagram**, **Email (Gmail)**, and **GitHub**.
   - Detailed glassmorphic channel cards with direct profiles, live email copy-to-clipboard button, and quick Gmail launcher.
