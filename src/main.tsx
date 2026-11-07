@@ -6,7 +6,6 @@ import App from './App'
 import About from './About'
 import Projects from './Projects'
 import Contact from './Contact'
-import TerminalModal from './TerminalModal'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -17,7 +16,6 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/projects" element={<Projects />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
-      <TerminalModal />
     </BrowserRouter>
   </StrictMode>,
 )
