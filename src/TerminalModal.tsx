@@ -19,6 +19,97 @@ export default function TerminalModal() {
   const terminalBottomRef = useRef<HTMLDivElement>(null)
   const navigate = useNavigate()
 
+  // Draggable floating button state
+  const [pos, setPos] = useState<{ x: number; y: number } | null>(() => {
+    try {
+      const saved = localStorage.getItem('cli_btn_pos')
+      if (saved) return JSON.parse(saved)
+    } catch {
+      // ignore
+    }
+    return null
+  })
+  const [isDragging, setIsDragging] = useState(false)
+  const buttonRef = useRef<HTMLButtonElement>(null)
+  const dragStartRef = useRef<{ startX: number; startY: number; btnX: number; btnY: number; moved: boolean }>({
+    startX: 0,
+    startY: 0,
+    btnX: 0,
+    btnY: 0,
+    moved: false,
+  })
+
+  // Handle window resize to keep button inside viewport bounds
+  useEffect(() => {
+    const handleResize = () => {
+      setPos((prev) => {
+        if (!prev) return null
+        const btnW = buttonRef.current?.offsetWidth || 90
+        const btnH = buttonRef.current?.offsetHeight || 36
+        const clampedX = Math.max(12, Math.min(window.innerWidth - btnW - 12, prev.x))
+        const clampedY = Math.max(12, Math.min(window.innerHeight - btnH - 12, prev.y))
+        return { x: clampedX, y: clampedY }
+      })
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  const handlePointerDown = (e: React.PointerEvent<HTMLButtonElement>) => {
+    if (e.button !== 0) return
+    const btn = buttonRef.current
+    if (!btn) return
+
+    const rect = btn.getBoundingClientRect()
+    dragStartRef.current = {
+      startX: e.clientX,
+      startY: e.clientY,
+      btnX: rect.left,
+      btnY: rect.top,
+      moved: false,
+    }
+    setIsDragging(true)
+    btn.setPointerCapture(e.pointerId)
+  }
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLButtonElement>) => {
+    if (!isDragging) return
+    const dx = e.clientX - dragStartRef.current.startX
+    const dy = e.clientY - dragStartRef.current.startY
+
+    if (Math.abs(dx) > 4 || Math.abs(dy) > 4) {
+      dragStartRef.current.moved = true
+    }
+
+    const btnW = buttonRef.current?.offsetWidth || 90
+    const btnH = buttonRef.current?.offsetHeight || 36
+    const newX = Math.max(12, Math.min(window.innerWidth - btnW - 12, dragStartRef.current.btnX + dx))
+    const newY = Math.max(12, Math.min(window.innerHeight - btnH - 12, dragStartRef.current.btnY + dy))
+
+    setPos({ x: newX, y: newY })
+  }
+
+  const handlePointerUp = (e: React.PointerEvent<HTMLButtonElement>) => {
+    if (!isDragging) return
+    setIsDragging(false)
+    try {
+      buttonRef.current?.releasePointerCapture(e.pointerId)
+    } catch {
+      // ignore
+    }
+
+    if (!dragStartRef.current.moved) {
+      // It was a tap / click, not a drag: toggle terminal
+      setIsOpen((prev) => !prev)
+    } else if (pos) {
+      try {
+        localStorage.setItem('cli_btn_pos', JSON.stringify(pos))
+      } catch {
+        // ignore
+      }
+    }
+  }
+
   // Toggle with ` or ~ key globally
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -266,17 +357,30 @@ export default function TerminalModal() {
 
   return (
     <>
-      {/* ─── Floating Trigger Button (Bottom Right) ─── */}
+      {/* ─── Movable Floating Trigger Button ─── */}
       <button
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-40 group flex items-center gap-2 rounded-full border border-cream/25 bg-black/80 px-3.5 py-2 text-xs font-mono text-cream/90 backdrop-blur-md shadow-[0_8px_24px_-6px_rgba(239,238,233,0.15)] transition-all duration-300 hover:scale-105 hover:border-cream/50 hover:bg-cream hover:text-black active:scale-95 select-none"
-        aria-label="Open Interactive Terminal"
-        title="Open Terminal (Press ~)"
+        ref={buttonRef}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={() => setIsDragging(false)}
+        style={pos ? { left: `${pos.x}px`, top: `${pos.y}px` } : undefined}
+        className={`fixed z-40 group flex items-center gap-2 rounded-full border border-cream/25 bg-black/85 px-3.5 py-2 text-xs font-mono text-cream/90 backdrop-blur-md shadow-[0_8px_24px_-6px_rgba(239,238,233,0.18)] select-none touch-none transition-shadow ${
+          pos ? '' : 'bottom-6 right-6'
+        } ${
+          isDragging
+            ? 'cursor-grabbing scale-105 border-cream/60 shadow-[0_12px_30px_-4px_rgba(239,238,233,0.3)]'
+            : 'cursor-grab hover:border-cream/50 hover:bg-cream hover:text-black hover:scale-105 active:scale-95'
+        }`}
+        aria-label="Open Interactive Terminal (Drag to move)"
+        title="Open Terminal (Click, or drag to move. Shortcut: ~)"
       >
-        <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-        <TerminalIcon size={14} className="transition-transform group-hover:scale-110" />
-        <span className="font-medium hidden sm:inline">CLI</span>
-        <span className="text-[10px] opacity-50 font-sans border border-current rounded px-1 hidden md:inline">~</span>
+        <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse pointer-events-none" />
+        <TerminalIcon size={14} className="transition-transform group-hover:scale-110 pointer-events-none" />
+        <span className="font-medium hidden sm:inline pointer-events-none">CLI</span>
+        <span className="text-[10px] opacity-50 font-sans border border-current rounded px-1 hidden md:inline pointer-events-none">
+          ~
+        </span>
       </button>
 
       {/* ─── Modal Overlay ─── */}
