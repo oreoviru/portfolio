@@ -19,6 +19,7 @@ import {
   GitBranch,
   ArrowRight,
 } from 'lucide-react'
+import GitHubStatsStrip from './GitHubStatsStrip'
 
 const BG_IMAGE =
   'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260729_022513_486985a2-ac8c-4278-91a8-071dcd9fcaff.png&w=1280&q=85'
@@ -622,6 +623,9 @@ export default function Projects() {
             })}
           </div>
         </div>
+
+        {/* ─── Live GitHub Pulse Strip ─── */}
+        <GitHubStatsStrip />
 
         {/* ─── Bottom Footer ─── */}
         <div className="mt-24 pt-10 border-t border-cream/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-hn text-cream/60">
