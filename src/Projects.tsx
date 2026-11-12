@@ -15,19 +15,38 @@ import {
   CheckCircle2,
   Lock,
   Music,
+  ChevronDown,
+  GitBranch,
+  ArrowRight,
 } from 'lucide-react'
 
 const BG_IMAGE =
   'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260729_022513_486985a2-ac8c-4278-91a8-071dcd9fcaff.png&w=1280&q=85'
 
+type ProjectCategory = 'All' | 'AI & Vision' | 'Full-Stack' | 'Creative Tech'
+
+const PROJECT_CATEGORIES: ProjectCategory[] = [
+  'All',
+  'AI & Vision',
+  'Full-Stack',
+  'Creative Tech',
+]
+
+interface ProjectArchitecture {
+  flow: string[]
+  highlights: string[]
+}
+
 interface OtherProject {
   title: string
   subtitle: string
   description: string
+  categories: Exclude<ProjectCategory, 'All'>[]
   tags: string[]
   githubUrl: string
   liveUrl?: string
   icon: typeof Plane
+  architecture: ProjectArchitecture
 }
 
 const OTHER_PROJECTS: OtherProject[] = [
@@ -36,37 +55,93 @@ const OTHER_PROJECTS: OtherProject[] = [
     subtitle: 'Flight-Aware Peer Rideshare Matcher',
     description:
       'Deterministic flight-synchronized passenger matching engine that groups airport travelers arriving on compatible flights. Features 4-factor scoring, transit corridor vector alignment, and proportional fare splitting.',
+    categories: ['Full-Stack'],
     tags: ['Next.js 16', 'React 19', 'TypeScript', 'Tailwind CSS', 'Supabase'],
     githubUrl: 'https://github.com/oreoviru/airpool-ai',
     icon: Plane,
+    architecture: {
+      flow: [
+        'Flight Arrival Sync',
+        '4-Factor Scoring',
+        'Corridor Vector Match',
+        'Proportional Fare Split',
+      ],
+      highlights: [
+        'Deterministic flight-window grouping for airport pickups',
+        'Vector route alignment to minimize passenger detours',
+        'Real-time rideshare state backed by Supabase',
+      ],
+    },
   },
   {
     title: 'Campus Recover',
     subtitle: 'AI Multi-Modal Lost & Found Platform',
     description:
       'University lost & found management system built for Rishihood University. Combines CLIP visual embeddings, Sentence-Transformers semantic text matching, interactive OpenStreetMap GIS radar, and Argon2id blind verification.',
+    categories: ['AI & Vision', 'Full-Stack'],
     tags: ['FastAPI', 'PyTorch', 'CLIP ViT-B/32', 'React 19', 'Leaflet', '85 Tests'],
     githubUrl: 'https://github.com/oreoviru/Campus-Recover',
     liveUrl: 'https://frontend-ecru-gamma-87.vercel.app',
     icon: Search,
+    architecture: {
+      flow: [
+        'Image & Text Ingest',
+        'CLIP + Text Embeddings',
+        'OpenStreetMap GIS Radar',
+        'Argon2id Blind Claim',
+      ],
+      highlights: [
+        'Cross-modal visual and semantic similarity search',
+        'Privacy-preserving ownership verification using Argon2id',
+        'Verified backend test suite with 85 automated checks',
+      ],
+    },
   },
   {
     title: 'PuzzleCam',
     subtitle: 'Gesture-Controlled Photobooth & 3x3 Puzzle',
     description:
       'Zero-install browser photobooth. Captures photos using hands as a physical frame, converts snapshots into an interactive 3x3 puzzle solved via pinch gestures, and exports downloadable photo strips.',
+    categories: ['AI & Vision', 'Creative Tech'],
     tags: ['JavaScript (ES6+)', 'MediaPipe Hands', 'HTML5 Canvas', 'WebCam API'],
     githubUrl: 'https://github.com/oreoviru/PuzzleCam',
     icon: Camera,
+    architecture: {
+      flow: [
+        'WebCam Stream',
+        'MediaPipe Hand Frame',
+        'Canvas 3x3 Tile Slice',
+        'Pinch-Gesture Solver',
+      ],
+      highlights: [
+        '100% browser-native computer vision with zero installation',
+        'Hand-framed snapshot capture and real-time tile swapping',
+        'Exports ready-to-save composite photo strips',
+      ],
+    },
   },
   {
     title: 'RetroLens',
     subtitle: 'Gesture-Driven Computer Vision FX Engine',
     description:
       'Real-time hand-tracked visual portal featuring 11 live shaders (Thermal, Glitch, Neon Canny Edge, Rainbow Wave). Users scale the portal with spread hands, pinch to cycle filters, and toggle 2D/3D wireframe mesh modes.',
+    categories: ['AI & Vision', 'Creative Tech'],
     tags: ['Python', 'OpenCV', 'MediaPipe', 'NumPy'],
     githubUrl: 'https://github.com/oreoviru/Retrolens',
     icon: Layers,
+    architecture: {
+      flow: [
+        'OpenCV Frame Capture',
+        'MediaPipe Hand Scale',
+        '11 Live FX Shaders',
+        '2D / 3D Mesh Portal',
+      ],
+      highlights: [
+        'Pinch-to-cycle shaders including Thermal, Glitch & Canny Edge',
+        'Dynamic portal scaling mapped directly to hand spread distance',
+        'Switchable 2D plane and 3D wireframe mesh rendering',
+      ],
+    },
   },
 ]
 
@@ -146,7 +221,18 @@ const NEURO_MODES: Record<NeuroMode, ModeData> = {
 
 export default function Projects() {
   const [activeMode, setActiveMode] = useState<NeuroMode>('coding')
+  const [selectedCategory, setSelectedCategory] = useState<ProjectCategory>('All')
+  const [expandedArch, setExpandedArch] = useState<Record<string, boolean>>({})
   const currentMode = NEURO_MODES[activeMode]
+
+  const filteredProjects =
+    selectedCategory === 'All'
+      ? OTHER_PROJECTS
+      : OTHER_PROJECTS.filter((project) => project.categories.includes(selectedCategory))
+
+  const toggleArchitecture = (title: string) => {
+    setExpandedArch((prev) => ({ ...prev, [title]: !prev[title] }))
+  }
 
   return (
     <main className="relative min-h-[100dvh] w-full bg-black selection:bg-cream selection:text-black">
@@ -363,18 +449,60 @@ export default function Projects() {
         {/* OTHER STANDOUT REPOSITORIES                                         */}
         {/* ═══════════════════════════════════════════════════════════════════ */}
         <div>
-          <div className="mb-8">
-            <p className="font-hn text-xs uppercase tracking-[0.25em] text-cream/50 mb-1">
-              More Work &amp; Research
-            </p>
-            <h2 className="font-hn text-3xl sm:text-4xl text-cream tracking-tight">
-              Other Standout Repositories
-            </h2>
+          <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-5">
+            <div>
+              <p className="font-hn text-xs uppercase tracking-[0.25em] text-cream/50 mb-1">
+                More Work &amp; Research
+              </p>
+              <h2 className="font-hn text-3xl sm:text-4xl text-cream tracking-tight">
+                Other Standout Repositories
+              </h2>
+            </div>
+
+            {/* Glass Category Filter Pills */}
+            <div
+              role="tablist"
+              aria-label="Filter projects by category"
+              className="inline-flex flex-wrap items-center gap-1 rounded-full border border-cream/20 bg-black/60 p-1 backdrop-blur-xl self-start md:self-auto"
+            >
+              {PROJECT_CATEGORIES.map((category) => {
+                const isActive = selectedCategory === category
+                const count =
+                  category === 'All'
+                    ? OTHER_PROJECTS.length
+                    : OTHER_PROJECTS.filter((p) => p.categories.includes(category)).length
+
+                return (
+                  <button
+                    key={category}
+                    role="tab"
+                    aria-selected={isActive}
+                    onClick={() => setSelectedCategory(category)}
+                    className={`rounded-full px-3.5 py-1.5 text-xs font-hn tracking-wide transition-all duration-300 flex items-center gap-1.5 ${
+                      isActive
+                        ? 'bg-cream text-black font-medium shadow-[0_2px_10px_rgba(239,238,233,0.25)]'
+                        : 'text-cream/70 hover:text-cream hover:bg-white/[0.08]'
+                    }`}
+                  >
+                    <span>{category}</span>
+                    <span
+                      className={`text-[10px] font-mono ${
+                        isActive ? 'text-black/60' : 'text-cream/40'
+                      }`}
+                    >
+                      {count}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {OTHER_PROJECTS.map((project) => {
+            {filteredProjects.map((project) => {
               const Icon = project.icon
+              const isArchOpen = Boolean(expandedArch[project.title])
+
               return (
                 <div
                   key={project.title}
@@ -386,7 +514,7 @@ export default function Projects() {
                       <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-cream/20 bg-cream/5 text-cream/80 group-hover:scale-110 group-hover:border-cream/50 group-hover:bg-cream/15 group-hover:text-cream transition-all duration-300">
                         <Icon size={22} strokeWidth={1.75} />
                       </div>
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-wrap items-center justify-end gap-2">
                         {project.liveUrl && (
                           <a
                             href={project.liveUrl}
@@ -409,6 +537,25 @@ export default function Projects() {
                           <Github size={12} />
                           <span>Code</span>
                         </a>
+                        <button
+                          type="button"
+                          onClick={() => toggleArchitecture(project.title)}
+                          aria-expanded={isArchOpen}
+                          className={`flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs font-hn transition-all duration-200 ${
+                            isArchOpen
+                              ? 'border-cream bg-cream text-black font-medium'
+                              : 'border-cream/20 bg-cream/5 text-cream/80 hover:text-cream hover:border-cream/50'
+                          }`}
+                        >
+                          <GitBranch size={11} />
+                          <span>Architecture</span>
+                          <ChevronDown
+                            size={12}
+                            className={`transition-transform duration-300 ${
+                              isArchOpen ? 'rotate-180' : ''
+                            }`}
+                          />
+                        </button>
                       </div>
                     </div>
 
@@ -421,9 +568,42 @@ export default function Projects() {
                     </p>
 
                     {/* Description */}
-                    <p className="font-hn text-sm text-cream/70 leading-relaxed font-light mb-6">
+                    <p className="font-hn text-sm text-cream/70 leading-relaxed font-light mb-5">
                       {project.description}
                     </p>
+
+                    {/* Expandable Architecture Preview */}
+                    {isArchOpen && (
+                      <div className="mb-5 rounded-xl border border-cream/15 bg-black/65 p-4 space-y-3 anim-fade-in">
+                        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-cream/45">
+                          System Pipeline
+                        </p>
+                        <div className="flex flex-wrap items-center gap-1.5 text-[11px] font-mono">
+                          {project.architecture.flow.map((step, index) => (
+                            <div key={step} className="flex items-center gap-1.5">
+                              <span className="rounded-md border border-cream/20 bg-white/[0.04] px-2 py-1 text-cream/90">
+                                {step}
+                              </span>
+                              {index < project.architecture.flow.length - 1 && (
+                                <ArrowRight size={11} className="text-cream/40 shrink-0" />
+                              )}
+                            </div>
+                          ))}
+                        </div>
+
+                        <ul className="space-y-1.5 pt-2 border-t border-cream/10">
+                          {project.architecture.highlights.map((item) => (
+                            <li
+                              key={item}
+                              className="flex items-start gap-2 font-hn text-xs text-cream/75 font-light leading-relaxed"
+                            >
+                              <span className="mt-1.5 h-1 w-1 rounded-full bg-cream/60 shrink-0" />
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
                   </div>
 
                   {/* Tech stack tags */}
