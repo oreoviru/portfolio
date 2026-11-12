@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
-  ArrowLeft,
   Terminal,
   FileCode,
   Atom,
@@ -178,39 +177,8 @@ export default function About() {
       {/* ─── Subtle dark veil for comfortable readability ─── */}
       <div className="fixed inset-0 bg-black/75 backdrop-blur-[2px] pointer-events-none" />
 
-      {/* ─── Sticky / Top Navigation ─── */}
-      <header className="relative z-20 flex items-center justify-between px-6 pt-6 sm:px-10 sm:pt-8 text-cream">
-        <Link
-          to="/"
-          className="font-hn text-lg tracking-wide hover:opacity-60 transition-opacity duration-300"
-        >
-          Viraj
-        </Link>
-        <div className="flex items-center gap-6 sm:gap-8">
-          <Link
-            to="/projects"
-            className="font-hn text-sm hover:opacity-60 transition-opacity duration-300"
-          >
-            PROJECTS
-          </Link>
-          <Link
-            to="/contact"
-            className="font-hn text-sm hover:opacity-60 transition-opacity duration-300"
-          >
-            CONTACT
-          </Link>
-          <Link
-            to="/"
-            className="font-hn text-sm flex items-center gap-2 hover:opacity-60 transition-opacity duration-300 group"
-          >
-            <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-1" />
-            <span>Back to Home</span>
-          </Link>
-        </div>
-      </header>
-
       {/* ─── Main Content Container ─── */}
-      <div className="relative z-10 mx-auto max-w-5xl px-6 py-12 sm:px-10 sm:py-20">
+      <div className="relative z-10 mx-auto max-w-5xl px-6 pt-24 pb-16 sm:px-10 sm:pt-28 sm:pb-20">
         {/* Title */}
         <h1 className="font-hn text-5xl sm:text-7xl text-cream mb-6 tracking-tight anim-fade-up leading-tight">
           About Me

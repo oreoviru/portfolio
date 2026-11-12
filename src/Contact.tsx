@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
-  ArrowLeft,
   Linkedin,
   Instagram,
   Mail,
@@ -102,42 +101,8 @@ export default function Contact() {
       {/* ─── Dark Ambient Veil ─── */}
       <div className="fixed inset-0 bg-black/80 backdrop-blur-[2px] pointer-events-none" />
 
-      {/* ─── Top Main Navigation ─── */}
-      <header className="relative z-20 flex items-center justify-between px-6 pt-6 sm:px-10 sm:pt-8 text-cream">
-        <Link
-          to="/"
-          className="font-hn text-lg tracking-wide hover:opacity-60 transition-opacity duration-300"
-        >
-          Viraj
-        </Link>
-        <div className="flex items-center gap-6 sm:gap-8 text-sm">
-          <Link
-            to="/projects"
-            className="font-hn hover:opacity-60 transition-opacity duration-300"
-          >
-            PROJECTS
-          </Link>
-          <Link
-            to="/about"
-            className="font-hn hover:opacity-60 transition-opacity duration-300"
-          >
-            ABOUT ME
-          </Link>
-          <span className="font-hn text-cream border-b border-cream/50 pb-0.5">
-            CONTACT
-          </span>
-          <Link
-            to="/"
-            className="font-hn flex items-center gap-2 hover:opacity-60 transition-opacity duration-300 group"
-          >
-            <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-1" />
-            <span className="hidden sm:inline">Back to Home</span>
-          </Link>
-        </div>
-      </header>
-
       {/* ─── Content Container ─── */}
-      <div className="relative z-10 mx-auto max-w-5xl px-6 py-12 sm:px-10 sm:py-20">
+      <div className="relative z-10 mx-auto max-w-5xl px-6 pt-24 pb-16 sm:px-10 sm:pt-28 sm:pb-20">
         {/* Header */}
         <div className="mb-10">
           <p className="font-hn text-xs uppercase tracking-[0.25em] text-cream/50 mb-2">
