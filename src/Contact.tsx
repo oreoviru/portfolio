@@ -260,7 +260,7 @@ export default function Contact() {
                   <div className="flex items-center gap-2">
                     <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
                     <h2 className="font-hn text-2xl sm:text-3xl text-cream font-medium tracking-tight">
-                      Send an Direct Message
+                      Send a Direct Message
                     </h2>
                   </div>
                   <p className="font-hn text-xs sm:text-sm text-cream/65 font-light mt-1">
