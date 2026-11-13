@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import {
   Github,
@@ -6,6 +6,7 @@ import {
   Terminal,
   ShieldCheck,
   Volume2,
+  VolumeX,
   FolderSync,
   Sparkles,
   Plane,
@@ -224,7 +225,90 @@ export default function Projects() {
   const [activeMode, setActiveMode] = useState<NeuroMode>('coding')
   const [selectedCategory, setSelectedCategory] = useState<ProjectCategory>('All')
   const [expandedArch, setExpandedArch] = useState<Record<string, boolean>>({})
+  const [isPlayingVoice, setIsPlayingVoice] = useState(false)
   const currentMode = NEURO_MODES[activeMode]
+
+  // Cleanup speech synthesis if user navigates away while playing
+  useEffect(() => {
+    return () => {
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        window.speechSynthesis.cancel()
+      }
+    }
+  }, [])
+
+  const toggleNeuroVoice = () => {
+    if (typeof window === 'undefined') return
+
+    if (isPlayingVoice) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel()
+      }
+      setIsPlayingVoice(false)
+      return
+    }
+
+    // Play subtle high-tech futuristic wake chime via Web Audio API
+    try {
+      const AudioCtx =
+        window.AudioContext ||
+        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
+      if (AudioCtx) {
+        const ctx = new AudioCtx()
+        const now = ctx.currentTime
+        const osc = ctx.createOscillator()
+        const gain = ctx.createGain()
+        osc.type = 'sine'
+        osc.frequency.setValueAtTime(587.33, now) // D5
+        osc.frequency.setValueAtTime(880, now + 0.08) // A5
+        gain.gain.setValueAtTime(0.08, now)
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28)
+        osc.connect(gain)
+        gain.connect(ctx.destination)
+        osc.start(now)
+        osc.stop(now + 0.28)
+      }
+    } catch {
+      // AudioContext unavailable, proceed directly to speech
+    }
+
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel()
+      const text =
+        'Greetings. NEURO core diagnostics are nominal. Computer vision, local reasoning, and macOS automation are online.'
+      const utterance = new SpeechSynthesisUtterance(text)
+
+      const voices = window.speechSynthesis.getVoices()
+      const preferredVoice =
+        voices.find(
+          (v) =>
+            v.lang.startsWith('en') &&
+            (v.name.includes('Ava') ||
+              v.name.includes('Samantha') ||
+              v.name.includes('Natural') ||
+              v.name.includes('Google') ||
+              v.name.includes('Karen') ||
+              v.name.includes('Victoria'))
+        ) || voices.find((v) => v.lang.startsWith('en'))
+
+      if (preferredVoice) {
+        utterance.voice = preferredVoice
+      }
+      utterance.rate = 1.02
+      utterance.pitch = 1.05
+
+      utterance.onstart = () => {
+        setIsPlayingVoice(true)
+        setActiveMode('voice')
+      }
+      utterance.onend = () => setIsPlayingVoice(false)
+      utterance.onerror = () => setIsPlayingVoice(false)
+
+      window.speechSynthesis.speak(utterance)
+    } else {
+      setActiveMode('voice')
+    }
+  }
 
   const filteredProjects =
     selectedCategory === 'All'
@@ -315,10 +399,27 @@ export default function Projects() {
                   <ShieldCheck size={16} className="text-cream/80 shrink-0" />
                   <span>YOLOv8 Biometric Face ID</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Volume2 size={16} className="text-cream/80 shrink-0" />
-                  <span>24kHz AvaNeural Voice</span>
-                </div>
+                <button
+                  type="button"
+                  onClick={toggleNeuroVoice}
+                  className="flex items-center gap-2 group/voice hover:text-cream text-left transition-colors cursor-pointer"
+                  title="Click to play 24kHz neural voice preview"
+                >
+                  <Volume2
+                    size={16}
+                    className={`transition-colors shrink-0 ${
+                      isPlayingVoice
+                        ? 'text-emerald-400 animate-pulse'
+                        : 'text-cream/80 group-hover/voice:text-cream'
+                    }`}
+                  />
+                  <span className="underline decoration-cream/30 underline-offset-4 group-hover/voice:decoration-cream">
+                    24kHz AvaNeural Voice
+                  </span>
+                  <span className="text-[10px] font-mono rounded border border-cream/20 px-1 py-0.5 opacity-70 group-hover/voice:opacity-100">
+                    {isPlayingVoice ? 'Playing' : 'Play'}
+                  </span>
+                </button>
                 <div className="flex items-center gap-2">
                   <FolderSync size={16} className="text-cream/80 shrink-0" />
                   <span>Smart ~/Downloads Organizer</span>
@@ -365,6 +466,34 @@ export default function Projects() {
 
               {/* Action Buttons */}
               <div className="pt-4 flex flex-wrap items-center gap-3">
+                <button
+                  type="button"
+                  onClick={toggleNeuroVoice}
+                  className={`inline-flex items-center gap-2 rounded-xl border px-4 py-2 font-hn text-xs tracking-wide transition-all duration-200 ${
+                    isPlayingVoice
+                      ? 'border-emerald-400/70 bg-emerald-400/15 text-emerald-300 shadow-[0_0_15px_rgba(52,211,153,0.3)]'
+                      : 'border-cream/30 bg-cream/10 text-cream hover:bg-cream hover:text-black'
+                  }`}
+                  aria-label={isPlayingVoice ? 'Stop NEURO voice' : 'Listen to NEURO voice preview'}
+                >
+                  {isPlayingVoice ? (
+                    <>
+                      <VolumeX size={14} className="text-emerald-400" />
+                      <span className="font-medium">Stop Audio</span>
+                      <span className="flex items-center gap-0.5 ml-1">
+                        <span className="h-2 w-0.5 rounded-full bg-emerald-400 animate-pulse" />
+                        <span className="h-3.5 w-0.5 rounded-full bg-emerald-400 animate-pulse" />
+                        <span className="h-2 w-0.5 rounded-full bg-emerald-400 animate-pulse" />
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <Volume2 size={14} className="text-cream" />
+                      <span className="font-medium">Listen to NEURO (Voice Sample)</span>
+                    </>
+                  )}
+                </button>
+
                 <span className="inline-flex items-center gap-2 rounded-xl border border-cream/30 bg-cream/10 text-cream px-4 py-2 font-hn text-xs tracking-wide">
                   <Lock size={14} className="text-cream/80" />
                   <span>Private Repository &bull; Proprietary Core</span>
